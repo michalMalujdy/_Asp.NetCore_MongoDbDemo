@@ -27,9 +27,17 @@ namespace Blog.Api.Controllers
 
             return postId;
         }
+        
+        [HttpGet("{postId}")]
+        public Task<Post> GetPost(Guid postId)
+            => _postsRepository.Get(postId);
 
         [HttpGet]
         public Task<ICollection<Post>> GetPosts()
             => _postsRepository.GetAll();
+
+        [HttpPut]
+        public Task UpdatePost(Post post)
+            => _postsRepository.Update(post);
     }
 }

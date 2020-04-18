@@ -10,27 +10,39 @@ namespace Blog.Data.Repositories
 {
     public class PostsRepository : IPostsRepository
     {
-        private readonly IMongoCollection<Post> _posts;
+        private readonly IMongoCollection<Post> _postsCollection;
 
         public PostsRepository(MongoDbSettings dbSettings)
         {
-            _posts = new MongoClient(dbSettings.ConnectionString)
+            _postsCollection = new MongoClient(dbSettings.ConnectionString)
                 .GetDatabase(dbSettings.DbName)
                 .GetCollection<Post>("Posts");
         }
 
         public async Task<Guid> Create(Post post)
         {
-            await _posts.InsertOneAsync(post);
+            await _postsCollection.InsertOneAsync(post);
 
             return post.Id;
         }
 
+        public async Task<Post> Get(Guid postId)
+        {
+            var postsCursor = await _postsCollection.FindAsync(post => post.Id == postId);
+
+            return await postsCursor.FirstAsync();
+        }
+
         public async Task<ICollection<Post>> GetAll()
         {
-            var posts = await _posts.FindAsync(post => true);
+            var postsCursor = await _postsCollection.FindAsync(post => true);
 
-            return await posts.ToListAsync();
+            return await postsCursor.ToListAsync();
         }
+
+        public Task Update(Post post)
+            => _postsCollection.ReplaceOneAsync(
+                p => p.Id == post.Id,
+                post);
     }
 }
