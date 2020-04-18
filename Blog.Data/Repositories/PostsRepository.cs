@@ -44,5 +44,8 @@ namespace Blog.Data.Repositories
             => _postsCollection.ReplaceOneAsync(
                 p => p.Id == post.Id,
                 post);
+
+        public Task Delete(Guid postId)
+            => _postsCollection.DeleteOneAsync(p => p.Id == postId);
     }
 }

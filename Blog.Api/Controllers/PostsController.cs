@@ -64,5 +64,9 @@ namespace Blog.Api.Controllers
 
             return Ok();
         }
+
+        [HttpDelete("{postId}")]
+        public Task Delete([FromRoute] Guid postId)
+            => _postsRepository.Delete(postId);
     }
 }

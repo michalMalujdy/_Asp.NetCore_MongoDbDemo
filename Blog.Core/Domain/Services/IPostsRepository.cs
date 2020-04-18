@@ -14,5 +14,7 @@ namespace Blog.Core.Domain.Services
         Task<ICollection<Post>> GetAll();
 
         Task Update(Post post);
+        
+        Task Delete(Guid postId);
     }
 }
