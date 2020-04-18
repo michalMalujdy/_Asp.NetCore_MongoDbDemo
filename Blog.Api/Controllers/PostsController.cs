@@ -19,9 +19,18 @@ namespace Blog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<Guid> CreatePost([FromBody] CreatePostCommand command)
+        public async Task<Guid> CreatePost(
+            [FromBody] CreatePostCommand command)
         {
-            var postEntity = new Post(command.Title, command.Content);
+            var now = DateTimeOffset.Now;
+            
+            var postEntity = new Post
+            {
+                Title = command.Title,
+                Content = command.Content,
+                CreatedAt = now,
+                UpdatedAt = now
+            };
 
             var postId = await _postsRepository.Create(postEntity);
 
@@ -29,15 +38,31 @@ namespace Blog.Api.Controllers
         }
         
         [HttpGet("{postId}")]
-        public Task<Post> GetPost(Guid postId)
+        public Task<Post> GetPost(
+            [FromRoute] Guid postId)
             => _postsRepository.Get(postId);
 
         [HttpGet]
         public Task<ICollection<Post>> GetPosts()
             => _postsRepository.GetAll();
 
-        [HttpPut]
-        public Task UpdatePost(Post post)
-            => _postsRepository.Update(post);
+        [HttpPut("{postId}")]
+        public async Task<IActionResult> UpdatePost(
+            [FromRoute] Guid postId,
+            [FromBody] UpdatePostCommand command)
+        {
+            var post = await _postsRepository.Get(postId);
+
+            if (post == null)
+                return new NotFoundResult();
+
+            post.Title = command.Title;
+            post.Content = command.Content;
+            post.UpdatedAt = DateTimeOffset.Now;
+
+            await _postsRepository.Update(post);
+
+            return Ok();
+        }
     }
 }
