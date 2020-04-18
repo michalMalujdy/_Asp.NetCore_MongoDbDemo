@@ -2,20 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blog.Api.Configurations;
-using Blog.Api.Domain.Models;
-using Blog.Api.Domain.Services;
+using Blog.Core.Domain.Models;
+using Blog.Core.Domain.Services;
 using MongoDB.Driver;
 
-namespace Blog.Api.App.Services
+namespace Blog.Data.Repositories
 {
     public class PostsRepository : IPostsRepository
     {
         private readonly IMongoCollection<Post> _posts;
 
-        public PostsRepository(MongoDbConfiguration dbConfig)
+        public PostsRepository(MongoDbSettings dbSettings)
         {
-            _posts = new MongoClient(dbConfig.ConnectionString)
-                .GetDatabase(dbConfig.DbName)
+            _posts = new MongoClient(dbSettings.ConnectionString)
+                .GetDatabase(dbSettings.DbName)
                 .GetCollection<Post>("Posts");
         }
 

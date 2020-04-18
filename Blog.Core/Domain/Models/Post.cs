@@ -1,11 +1,9 @@
 using System;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace Blog.Api.Domain.Models
+namespace Blog.Core.Domain.Models
 {
     public class Post
     {
-        [BsonId]
         public Guid Id { get; set; }
 
         public string Title { get; set; }

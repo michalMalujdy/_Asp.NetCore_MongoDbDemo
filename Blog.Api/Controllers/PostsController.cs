@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Api.Domain.Models;
-using Blog.Api.Domain.Services;
 using Blog.Api.Resources;
+using Blog.Core.Domain.Models;
+using Blog.Core.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers

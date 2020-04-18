@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Api.Domain.Models;
+using Blog.Core.Domain.Models;
 
-namespace Blog.Api.Domain.Services
+namespace Blog.Core.Domain.Services
 {
     public interface IPostsRepository
     {
