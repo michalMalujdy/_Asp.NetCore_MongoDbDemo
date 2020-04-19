@@ -1,8 +1,8 @@
 using System;
 
-namespace Blog.Core.Domain.Models
+namespace Blog.Api.Resources.Posts
 {
-    public class Post
+    public class GetPostResult
     {
         public Guid Id { get; set; }
 

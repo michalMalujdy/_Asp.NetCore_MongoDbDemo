@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blog.Api.Resources;
+using Blog.Api.Resources.Posts;
 using Blog.Core.Domain.Models;
 using Blog.Core.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ namespace Blog.Api.Controllers
             {
                 Title = command.Title,
                 Content = command.Content,
+                AuthorId = command.AuthorId,
                 CreatedAt = now,
                 UpdatedAt = now
             };

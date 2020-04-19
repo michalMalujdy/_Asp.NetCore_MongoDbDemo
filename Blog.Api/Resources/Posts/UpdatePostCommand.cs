@@ -1,8 +1,6 @@
-using System;
-
-namespace Blog.Api.Resources
+namespace Blog.Api.Resources.Posts
 {
-    public class CreatePostCommand
+    public class UpdatePostCommand
     {
         public string Title { get; set; }
         public string Content { get; set; }
