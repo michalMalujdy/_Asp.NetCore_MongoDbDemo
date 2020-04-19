@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.10.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blog.App\Blog.App.csproj" />
     <ProjectReference Include="..\Blog.Core\Blog.Core.csproj" />
     <ProjectReference Include="..\Blog.Data\Blog.Data.csproj" />
   </ItemGroup>

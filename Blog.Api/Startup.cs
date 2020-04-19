@@ -21,6 +21,8 @@ namespace Blog.Api
         {
             services.ConfigureDb(Configuration);
             
+            services.ConfigureCommandQuerySeparation();
+            
             services.AddControllers();
         }
 

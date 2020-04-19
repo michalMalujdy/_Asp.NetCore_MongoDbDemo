@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Api.Resources;
 using Blog.Api.Resources.Posts;
+using Blog.App.Features.Posts.Commands.CreatePost;
+using Blog.App.Resources;
 using Blog.Core.Domain.Models;
-using Blog.Core.Domain.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
@@ -12,32 +13,14 @@ namespace Blog.Api.Controllers
     [Route("api/posts")]
     public class PostsController : ControllerBase
     {
-        private readonly IPostsRepository _postsRepository;
-
-        public PostsController(IPostsRepository postsRepository)
-        {
-            _postsRepository = postsRepository;
-        }
+        private readonly IMediator _mediator;
+        public PostsController(IMediator mediator)
+            => _mediator = mediator;
 
         [HttpPost]
-        public async Task<Guid> CreatePost(
+        public Task<IdResource> CreatePost(
             [FromBody] CreatePostCommand command)
-        {
-            var now = DateTimeOffset.Now;
-            
-            var postEntity = new Post
-            {
-                Title = command.Title,
-                Content = command.Content,
-                AuthorId = command.AuthorId,
-                CreatedAt = now,
-                UpdatedAt = now
-            };
-
-            var postId = await _postsRepository.Create(postEntity);
-
-            return postId;
-        }
+            => _mediator.Send(command);
         
         [HttpGet("{postId}")]
         public Task<Post> GetPost(
