@@ -1,5 +1,5 @@
 using Blog.Api.Configurations;
-using Blog.Core.Domain.Services;
+using Blog.Core.Repositories.PostsRepository;
 using Blog.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

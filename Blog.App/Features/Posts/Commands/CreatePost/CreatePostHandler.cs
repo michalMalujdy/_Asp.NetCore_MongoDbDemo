@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blog.App.Resources;
 using Blog.Core.Domain.Models;
-using Blog.Core.Domain.Services;
+using Blog.Core.Repositories.PostsRepository;
 using MediatR;
 
 namespace Blog.App.Features.Posts.Commands.CreatePost
@@ -18,7 +18,7 @@ namespace Blog.App.Features.Posts.Commands.CreatePost
         public async Task<IdResource> Handle(CreatePostCommand command, CancellationToken ct)
         {
             var now = DateTimeOffset.Now;
-            
+
             var postEntity = new Post
             {
                 Title = command.Title,

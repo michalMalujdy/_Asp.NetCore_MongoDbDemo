@@ -1,6 +1,6 @@
 using System;
 
-namespace Blog.Api.Resources.Posts
+namespace Blog.App.Features.Posts.Queries.GetPost
 {
     public class GetPostResult
     {
@@ -13,5 +13,13 @@ namespace Blog.Api.Resources.Posts
         public DateTimeOffset UpdatedAt { get; set; }
 
         public Guid AuthorId { get; set; }
+
+        public class AuthorResult
+        {
+            public Guid Id { get; set; }
+        
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+        }
     }
 }
