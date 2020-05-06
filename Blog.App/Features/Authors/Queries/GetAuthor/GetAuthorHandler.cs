@@ -4,7 +4,7 @@ using Blog.Core.Domain.Models;
 using Blog.Core.Repositories;
 using MediatR;
 
-namespace Blog.App.Features.Authors.GetAuthor
+namespace Blog.App.Features.Authors.Queries.GetAuthor
 {
     public class GetAuthorHandler : IRequestHandler<GetAuthorQuery, Author>
     {

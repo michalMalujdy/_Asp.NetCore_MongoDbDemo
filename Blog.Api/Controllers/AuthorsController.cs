@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Blog.App.Features.Authors.Commands.CreateAuthor;
-using Blog.App.Features.Authors.Commands.GetAuthors;
-using Blog.App.Features.Authors.GetAuthor;
+using Blog.App.Features.Authors.Queries.GetAuthor;
+using Blog.App.Features.Authors.Queries.GetAuthors;
 using Blog.App.Resources;
 using Blog.Core.Domain.Models;
 using Blog.Core.Resources;

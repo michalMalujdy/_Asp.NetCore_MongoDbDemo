@@ -5,7 +5,7 @@ using Blog.Core.Repositories;
 using Blog.Core.Resources;
 using MediatR;
 
-namespace Blog.App.Features.Authors.Commands.GetAuthors
+namespace Blog.App.Features.Authors.Queries.GetAuthors
 {
     public class GetAuthorsHandler : IRequestHandler<GetAuthorsQuery, PagableListResult<Author>>
     {

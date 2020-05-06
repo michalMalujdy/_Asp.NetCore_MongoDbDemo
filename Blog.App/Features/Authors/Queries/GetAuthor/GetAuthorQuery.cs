@@ -2,7 +2,7 @@ using System;
 using Blog.Core.Domain.Models;
 using MediatR;
 
-namespace Blog.App.Features.Authors.GetAuthor
+namespace Blog.App.Features.Authors.Queries.GetAuthor
 {
     public class GetAuthorQuery : IRequest<Author>
     {
