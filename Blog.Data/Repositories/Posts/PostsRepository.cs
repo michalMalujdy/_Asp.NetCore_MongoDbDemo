@@ -7,6 +7,7 @@ using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
 using Blog.Core.Repositories;
 using Blog.Core.Resources;
+using Blog.Data.DbModels;
 using MongoDB.Driver;
 
 namespace Blog.Data.Repositories.Posts
@@ -59,13 +60,27 @@ namespace Blog.Data.Repositories.Posts
             return _mapper.Map<PostCompleteResource>(postWithAuthorDbModel);
         }
 
-        public async Task<List<PostCompleteResource>> GetAll(CancellationToken ct)
+        public async Task<PagableListResult<PostCompleteResource>> GetMany(
+            int pageNr,
+            int pageSize,
+            string? filter,
+            CancellationToken ct)
         {
-            var posts = await _postsCollection
-                .IncludeAll(_authorsCollection, _commentsCollection)
+            var baseQuery = _postsCollection
+                .IncludeAll(_authorsCollection, _commentsCollection);
+
+            baseQuery = ApplyFilter(baseQuery, filter);
+
+            var posts = await baseQuery
+                .Skip(pageNr * pageSize)
+                .Limit(pageSize)
                 .ToListAsync(ct);
 
-            return _mapper.Map<List<PostCompleteResource>>(posts);
+            return new PagableListResult<PostCompleteResource>
+            {
+                Results = _mapper.Map<List<PostCompleteResource>>(posts),
+                TotalCount = (await baseQuery.Count().FirstOrDefaultAsync(ct))?.Count ?? 0
+            };
         }
 
         public Task Update(Post post, CancellationToken ct)
@@ -76,5 +91,20 @@ namespace Blog.Data.Repositories.Posts
 
         public Task Delete(Guid postId, CancellationToken ct)
             => _postsCollection.DeleteOneAsync(p => p.Id == postId, ct);
+
+        private IAggregateFluent<PostCompleteDbModel> ApplyFilter(
+            IAggregateFluent<PostCompleteDbModel> baseQuery,
+            string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+                return baseQuery;
+
+            filter = filter.ToUpperInvariant();
+
+            return baseQuery.Match(post => post.Title
+                .ToUpperInvariant()
+                .Trim()
+                .Contains(filter));
+        }
     }
 }

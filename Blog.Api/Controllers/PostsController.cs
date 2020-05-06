@@ -26,8 +26,9 @@ namespace Blog.Api.Controllers
             => Mediator.Send(query);
 
         [HttpGet]
-        public Task<List<PostCompleteResource>> GetPosts()
-            => Mediator.Send(new GetPostsQuery());
+        public Task<PagableListResult<PostCompleteResource>> GetPosts(
+            [FromQuery] GetPostsQuery query)
+            => Mediator.Send(query);
 
         [HttpPut("{postId}")]
         public async Task UpdatePost(

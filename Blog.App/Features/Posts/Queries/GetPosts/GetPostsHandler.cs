@@ -7,14 +7,14 @@ using MediatR;
 
 namespace Blog.App.Features.Posts.Queries.GetPosts
 {
-    public class GetPostsHandler : IRequestHandler<GetPostsQuery, List<PostCompleteResource>>
+    public class GetPostsHandler : IRequestHandler<GetPostsQuery, PagableListResult<PostCompleteResource>>
     {
         private readonly IPostsRepository _postsRepository;
 
         public GetPostsHandler(IPostsRepository postsRepository)
             => _postsRepository = postsRepository;
 
-        public Task<List<PostCompleteResource>> Handle(GetPostsQuery query, CancellationToken ct)
-            => _postsRepository.GetAll(ct);
+        public Task<PagableListResult<PostCompleteResource>> Handle(GetPostsQuery query, CancellationToken ct)
+            => _postsRepository.GetMany(query.PageNr, query.PageSize, query.Filter, ct);
     }
 }

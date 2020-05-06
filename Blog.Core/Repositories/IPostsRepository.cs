@@ -14,7 +14,7 @@ namespace Blog.Core.Repositories
         Task<Post> Get(Guid postId, CancellationToken ct);
         Task<PostCompleteResource> GetPost(Guid postId, CancellationToken ct);
 
-        Task<List<PostCompleteResource>> GetAll(CancellationToken ct);
+        Task<PagableListResult<PostCompleteResource>> GetMany(int pageNr, int pageSize, string filter, CancellationToken ct);
 
         Task Update(Post post, CancellationToken ct);
 
