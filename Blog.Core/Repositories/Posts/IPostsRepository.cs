@@ -11,9 +11,9 @@ namespace Blog.Core.Repositories.Posts
         Task<Guid> Create(Post post);
 
         Task<Post> Get(Guid postId);
-        Task<PostWithAuthorResource> GetPostWithAuthor(Guid postId);
+        Task<PostCompleteResource> GetPost(Guid postId);
 
-        Task<List<PostWithAuthorResource>> GetAll();
+        Task<List<PostCompleteResource>> GetAll();
 
         Task Update(Post post);
 

@@ -31,12 +31,12 @@ namespace Blog.Api.Controllers
             => _mediator.Send(command);
 
         [HttpGet("{postId}")]
-        public Task<PostWithAuthorResource> GetPost(
+        public Task<PostCompleteResource> GetPost(
             [FromRoute] GetPostQuery query)
-            => _postsRepository.GetPostWithAuthor(query.PostId);
+            => _postsRepository.GetPost(query.PostId);
 
         [HttpGet]
-        public Task<List<PostWithAuthorResource>> GetPosts()
+        public Task<List<PostCompleteResource>> GetPosts()
             => _postsRepository.GetAll();
 
         [HttpPut("{postId}")]

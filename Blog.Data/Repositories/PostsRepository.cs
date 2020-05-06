@@ -15,6 +15,8 @@ namespace Blog.Data.Repositories
     {
         private readonly IMongoCollection<Post> _postsCollection;
         private readonly IMongoCollection<Author> _authorsCollection;
+        private readonly IMongoCollection<Comment> _commentsCollection;
+
         private readonly IMapper _mapper;
 
         public PostsRepository(MongoDbSettings dbSettings, IMapper mapper)
@@ -24,6 +26,7 @@ namespace Blog.Data.Repositories
 
             _postsCollection = db.GetCollection<Post>("Posts");
             _authorsCollection = db.GetCollection<Author>("Authors");
+            _commentsCollection = db.GetCollection<Comment>("Comments");
 
             _mapper = mapper;
         }
@@ -42,31 +45,35 @@ namespace Blog.Data.Repositories
             return await postsCursor.FirstAsync();
         }
 
-        public async Task<PostWithAuthorResource> GetPostWithAuthor(Guid postId)
+        public async Task<PostCompleteResource> GetPost(Guid postId)
         {
             var postWithAuthorDbModel = await _postsCollection
-
                 .Aggregate()
-                .Lookup<Post, Author, PostWithAuthorsDbModel>(
+                .Lookup<Post, Author, PostCompleteDbModel>(
                     _authorsCollection,
                     post => post.AuthorId,
                     author => author.Id,
                     model => model.Authors
                 )
+                .Lookup<PostCompleteDbModel, Comment, PostCompleteDbModel>(
+                    _commentsCollection,
+                    post => post.Id,
+                    comment => comment.PostId,
+                    model => model.Comments)
                 .Match(p => p.Id == postId)
                 .FirstOrDefaultAsync();
 
             if (postWithAuthorDbModel == null)
                 return null;
 
-            return _mapper.Map<PostWithAuthorResource>(postWithAuthorDbModel);
+            return _mapper.Map<PostCompleteResource>(postWithAuthorDbModel);
         }
 
-        public async Task<List<PostWithAuthorResource>> GetAll()
+        public async Task<List<PostCompleteResource>> GetAll()
         {
             var posts = await _postsCollection
                 .Aggregate()
-                .Lookup<Post, Author, PostWithAuthorsDbModel>(
+                .Lookup<Post, Author, PostCompleteDbModel>(
                     _authorsCollection,
                     post => post.AuthorId,
                     author => author.Id,
@@ -74,7 +81,7 @@ namespace Blog.Data.Repositories
                 )
                 .ToListAsync();
 
-            return _mapper.Map<List<PostWithAuthorResource>>(posts);
+            return _mapper.Map<List<PostCompleteResource>>(posts);
         }
 
         public Task Update(Post post)

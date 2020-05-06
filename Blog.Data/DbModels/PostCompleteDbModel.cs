@@ -2,8 +2,10 @@ using Blog.Core.Domain.Models;
 
 namespace Blog.Data.DbModels
 {
-    public class PostWithAuthorsDbModel : Post
+    public class PostCompleteDbModel : Post
     {
         public Author[] Authors { get; set; }
+
+        public Comment[] Comments { get; set; }
     }
 }

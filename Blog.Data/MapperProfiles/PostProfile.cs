@@ -9,7 +9,7 @@ namespace Blog.Data.MapperProfiles
     {
         public PostProfile()
         {
-            CreateMap<PostWithAuthorsDbModel, PostWithAuthorResource>()
+            CreateMap<PostCompleteDbModel, PostCompleteResource>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(
                     src => src.Authors.FirstOrDefault()));
         }
