@@ -6,8 +6,8 @@ using Blog.App.Features.Posts.Commands.CreatePost;
 using Blog.App.Features.Posts.Queries.GetPost;
 using Blog.App.Resources;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.PostsRepository;
-using Blog.Core.Repositories.PostsRepository.Models;
+using Blog.Core.Repositories.Posts;
+using Blog.Core.Repositories.Posts.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,7 +36,7 @@ namespace Blog.Api.Controllers
             => _postsRepository.GetPostWithAuthor(query.PostId);
 
         [HttpGet]
-        public Task<ICollection<Post>> GetPosts()
+        public Task<List<PostWithAuthorModel>> GetPosts()
             => _postsRepository.GetAll();
 
         [HttpPut("{postId}")]

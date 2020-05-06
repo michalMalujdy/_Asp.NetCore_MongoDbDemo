@@ -1,6 +1,6 @@
 using Blog.Core.Domain.Models;
 
-namespace Blog.Core.Repositories.PostsRepository.Models
+namespace Blog.Core.Repositories.Posts.Models
 {
     public class PostWithAuthorModel : Post
     {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.PostsRepository;
-using Blog.Core.Repositories.PostsRepository.Models;
+using Blog.Core.Repositories.Posts;
+using Blog.Core.Repositories.Posts.Models;
 using MongoDB.Driver;
 
 namespace Blog.Data.Repositories
@@ -38,7 +38,8 @@ namespace Blog.Data.Repositories
         }
 
         public Task<PostWithAuthorModel> GetPostWithAuthor(Guid postId)
-            => _postsCollection.Aggregate()
+            => _postsCollection
+                .Aggregate()
                 .Lookup<Post, Author, PostWithAuthorModel>(
                     _authorsCollection,
                     post => post.AuthorId,
@@ -47,12 +48,16 @@ namespace Blog.Data.Repositories
                 )
                 .FirstAsync();
 
-        public async Task<ICollection<Post>> GetAll()
-        {
-            var postsCursor = await _postsCollection.FindAsync(post => true);
-
-            return await postsCursor.ToListAsync();
-        }
+        public Task<List<PostWithAuthorModel>> GetAll()
+            => _postsCollection
+                .Aggregate()
+                .Lookup<Post, Author, PostWithAuthorModel>(
+                    _authorsCollection,
+                    post => post.AuthorId,
+                    author => author.Id,
+                    model => model.Authors
+                )
+                .ToListAsync();
 
         public Task Update(Post post)
             => _postsCollection.ReplaceOneAsync(

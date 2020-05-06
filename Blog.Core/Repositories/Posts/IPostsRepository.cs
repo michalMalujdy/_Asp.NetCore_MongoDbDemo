@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.PostsRepository.Models;
+using Blog.Core.Repositories.Posts.Models;
 
-namespace Blog.Core.Repositories.PostsRepository
+namespace Blog.Core.Repositories.Posts
 {
     public interface IPostsRepository
     {
@@ -13,7 +13,7 @@ namespace Blog.Core.Repositories.PostsRepository
         Task<Post> Get(Guid postId);
         Task<PostWithAuthorModel> GetPostWithAuthor(Guid postId);
 
-        Task<ICollection<Post>> GetAll();
+        Task<List<PostWithAuthorModel>> GetAll();
 
         Task Update(Post post);
 
