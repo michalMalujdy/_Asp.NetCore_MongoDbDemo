@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
 using Blog.Core.Resources;
@@ -7,7 +8,10 @@ namespace Blog.Core.Repositories.Authors
 {
     public interface IAuthorsRepository
     {
-        Task<Guid> Create(Author author);
-        Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize);
+        Task<Guid> Create(Author author, CancellationToken ct);
+
+        Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize, CancellationToken ct);
+
+        Task<Author> Get(Guid authorId, CancellationToken ct);
     }
 }

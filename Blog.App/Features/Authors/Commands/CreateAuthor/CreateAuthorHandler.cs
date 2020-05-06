@@ -28,7 +28,7 @@ namespace Blog.App.Features.Authors.Commands.CreateAuthor
                 UpdatedAt = now
             };
 
-            var id = await _authorsRepository.Create(author);
+            var id = await _authorsRepository.Create(author, ct);
 
             return new IdResource(id);
         }

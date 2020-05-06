@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
@@ -21,14 +21,14 @@ namespace Blog.Data.Repositories
             _authorsCollection = db.GetCollection<Author>("Authors");
         }
 
-        public async Task<Guid> Create(Author author)
+        public async Task<Guid> Create(Author author, CancellationToken ct)
         {
-            await _authorsCollection.InsertOneAsync(author);
+            await _authorsCollection.InsertOneAsync(author, ct);
 
             return author.Id;
         }
 
-        public async Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize)
+        public async Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize, CancellationToken ct)
         {
             var list = new PagableListResult<Author>();
 
@@ -36,13 +36,21 @@ namespace Blog.Data.Repositories
                 .Find(_ => true)
                 .Skip(pageSize * pageNr)
                 .Limit(pageSize)
-                .ToListAsync();
+                .ToListAsync(ct);
 
             list.TotalCount = await _authorsCollection
                 .Find(_ => true)
-                .CountDocumentsAsync();
+                .CountDocumentsAsync(ct);
 
             return list;
+        }
+
+        public async Task<Author> Get(Guid authorId, CancellationToken ct)
+        {
+            var cursor = await _authorsCollection
+                .FindAsync(author => author.Id == authorId, cancellationToken: ct);
+
+            return await cursor.FirstOrDefaultAsync(ct);
         }
     }
 }

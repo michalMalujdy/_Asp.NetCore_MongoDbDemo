@@ -15,6 +15,6 @@ namespace Blog.App.Features.Authors.Commands.GetAuthors
             => _authorsRepository = authorsRepository;
 
         public Task<PagableListResult<Author>> Handle(GetAuthorsQuery query, CancellationToken ct)
-            => _authorsRepository.GetMany(query.PageNr, query.PageSize);
+            => _authorsRepository.GetMany(query.PageNr, query.PageSize, ct);
     }
 }
