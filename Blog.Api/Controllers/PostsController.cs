@@ -7,28 +7,25 @@ using Blog.App.Features.Posts.Queries.GetPost;
 using Blog.App.Resources;
 using Blog.Core.Repositories.Posts;
 using Blog.Core.Resources;
-using Blog.Data.DbModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
 {
     [Route("api/posts")]
-    public class PostsController : ControllerBase
+    public class PostsController : MediatorController
     {
-        private readonly IMediator _mediator;
         private readonly IPostsRepository _postsRepository;
 
-        public PostsController(IMediator mediator, IPostsRepository postsRepository)
+        public PostsController(IPostsRepository postsRepository)
         {
-            _mediator = mediator;
             _postsRepository = postsRepository;
         }
 
         [HttpPost]
         public Task<IdResource> CreatePost(
             [FromBody] CreatePostCommand command)
-            => _mediator.Send(command);
+            => Mediator.Send(command);
 
         [HttpGet("{postId}")]
         public Task<PostCompleteResource> GetPost(
@@ -45,7 +42,7 @@ namespace Blog.Api.Controllers
             [FromBody] UpdatePostCommand command)
         {
             command.PostId = postId;
-            await _mediator.Send(command);
+            await Mediator.Send(command);
         }
 
         [HttpDelete("{postId}")]

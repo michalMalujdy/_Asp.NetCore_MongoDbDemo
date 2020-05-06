@@ -11,26 +11,21 @@ using Microsoft.AspNetCore.Mvc;
 namespace Blog.Api.Controllers
 {
     [Route("api/authors")]
-    public class AuthorsController : ControllerBase
+    public class AuthorsController : MediatorController
     {
-        private readonly IMediator _mediator;
-
-        public AuthorsController(IMediator mediator)
-            => _mediator = mediator;
-
         [HttpPost]
         public Task<IdResource> CreateAuthor(
             [FromBody] CreateAuthorCommand command)
-            => _mediator.Send(command);
+            => Mediator.Send(command);
 
         [HttpGet]
         public Task<PagableListResult<Author>> GetAuthors(
             [FromQuery] GetAuthorsQuery query)
-            => _mediator.Send(query);
+            => Mediator.Send(query);
 
         [HttpGet("{authorId}")]
         public Task<Author> GetAuthor(
             [FromRoute] GetAuthorQuery query)
-            => _mediator.Send(query);
+            => Mediator.Send(query);
     }
 }
