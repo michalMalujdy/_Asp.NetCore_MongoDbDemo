@@ -20,7 +20,7 @@ namespace Blog.App.Features.Posts.Commands.UpdatePost
 
         public async Task<Unit> Handle(UpdatePostCommand command, CancellationToken ct)
         {
-            var post = await _postsRepository.Get(command.PostId);
+            var post = await _postsRepository.Get(command.PostId, ct);
 
             if (post == null)
                 return Unit.Value;
@@ -28,7 +28,7 @@ namespace Blog.App.Features.Posts.Commands.UpdatePost
             _mapper.Map(command, post);
             post.UpdatedAt = DateTimeOffset.Now;
 
-            await _postsRepository.Update(post);
+            await _postsRepository.Update(post, ct);
 
             return Unit.Value;
         }

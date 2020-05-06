@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blog.App.Features.Posts.Commands.CreatePost;
+using Blog.App.Features.Posts.Commands.DeletePost;
 using Blog.App.Features.Posts.Commands.UpdatePost;
 using Blog.App.Features.Posts.Queries.GetPost;
+using Blog.App.Features.Posts.Queries.GetPosts;
 using Blog.App.Resources;
-using Blog.Core.Repositories;
 using Blog.Core.Resources;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
@@ -15,13 +15,6 @@ namespace Blog.Api.Controllers
     [Route("api/posts")]
     public class PostsController : MediatorController
     {
-        private readonly IPostsRepository _postsRepository;
-
-        public PostsController(IPostsRepository postsRepository)
-        {
-            _postsRepository = postsRepository;
-        }
-
         [HttpPost]
         public Task<IdResource> CreatePost(
             [FromBody] CreatePostCommand command)
@@ -30,11 +23,11 @@ namespace Blog.Api.Controllers
         [HttpGet("{postId}")]
         public Task<PostCompleteResource> GetPost(
             [FromRoute] GetPostQuery query)
-            => _postsRepository.GetPost(query.PostId);
+            => Mediator.Send(query);
 
         [HttpGet]
         public Task<List<PostCompleteResource>> GetPosts()
-            => _postsRepository.GetAll();
+            => Mediator.Send(new GetPostsQuery());
 
         [HttpPut("{postId}")]
         public async Task UpdatePost(
@@ -46,7 +39,8 @@ namespace Blog.Api.Controllers
         }
 
         [HttpDelete("{postId}")]
-        public Task Delete([FromRoute] Guid postId)
-            => _postsRepository.Delete(postId);
+        public Task Delete(
+            [FromRoute] DeletePostCommand command)
+            => Mediator.Send(command);
     }
 }

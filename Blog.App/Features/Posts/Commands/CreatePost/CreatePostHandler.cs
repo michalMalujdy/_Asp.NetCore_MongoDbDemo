@@ -25,7 +25,7 @@ namespace Blog.App.Features.Posts.Commands.CreatePost
             var post = _mapper.Map<Post>(command);
             post.SetInitialTimestamps();
 
-            var postId = await _postsRepository.Create(post);
+            var postId = await _postsRepository.Create(post, ct);
 
             return new IdResource(postId);
         }
