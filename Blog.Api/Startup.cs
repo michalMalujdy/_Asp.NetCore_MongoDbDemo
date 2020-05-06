@@ -28,6 +28,8 @@ namespace Blog.Api
             services.AddAutoMapper(DataAssemblyMarker.GetAssembly);
 
             services.AddControllers();
+
+            services.ConfigureSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +50,8 @@ namespace Blog.Api
             {
                 endpoints.MapControllers();
             });
+
+            app.UseSwagger();
         }
     }
 }

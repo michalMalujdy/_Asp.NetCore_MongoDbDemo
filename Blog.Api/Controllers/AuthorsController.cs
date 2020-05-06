@@ -15,9 +15,7 @@ namespace Blog.Api.Controllers
         private readonly IMediator _mediator;
 
         public AuthorsController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+            => _mediator = mediator;
 
         [HttpPost]
         public Task<IdResource> CreateAuthor(
