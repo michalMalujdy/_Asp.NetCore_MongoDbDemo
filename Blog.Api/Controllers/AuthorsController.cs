@@ -1,6 +1,9 @@
 using System.Threading.Tasks;
 using Blog.App.Features.Authors.Commands.CreateAuthor;
+using Blog.App.Features.Authors.Commands.GetAuthors;
 using Blog.App.Resources;
+using Blog.Core.Domain.Models;
+using Blog.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,5 +23,10 @@ namespace Blog.Api.Controllers
         public Task<IdResource> CreateAuthor(
             [FromBody] CreateAuthorCommand command)
             => _mediator.Send(command);
+
+        [HttpGet]
+        public Task<PagableListResult<Author>> GetAuthors(
+            [FromQuery] GetAuthorsQuery query)
+            => _mediator.Send(query);
     }
 }
