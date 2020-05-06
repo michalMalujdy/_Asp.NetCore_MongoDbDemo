@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.Posts.Models;
+using Blog.Core.Resources;
 
 namespace Blog.Core.Repositories.Posts
 {
@@ -11,9 +11,9 @@ namespace Blog.Core.Repositories.Posts
         Task<Guid> Create(Post post);
 
         Task<Post> Get(Guid postId);
-        Task<PostWithAuthorModel> GetPostWithAuthor(Guid postId);
+        Task<PostWithAuthorResource> GetPostWithAuthor(Guid postId);
 
-        Task<List<PostWithAuthorModel>> GetAll();
+        Task<List<PostWithAuthorResource>> GetAll();
 
         Task Update(Post post);
 

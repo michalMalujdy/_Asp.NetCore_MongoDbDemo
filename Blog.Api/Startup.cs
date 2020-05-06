@@ -1,4 +1,6 @@
+using AutoMapper;
 using Blog.Api.ConfigurationExtensions;
+using Blog.Data.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,9 +22,11 @@ namespace Blog.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureDb(Configuration);
-            
+
             services.ConfigureCommandQuerySeparation();
-            
+
+            services.AddAutoMapper(DataAssemblyMarker.GetAssembly);
+
             services.AddControllers();
         }
 

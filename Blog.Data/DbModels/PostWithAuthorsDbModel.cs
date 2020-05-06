@@ -1,8 +1,8 @@
 using Blog.Core.Domain.Models;
 
-namespace Blog.Core.Repositories.Posts.Models
+namespace Blog.Data.DbModels
 {
-    public class PostWithAuthorModel : Post
+    public class PostWithAuthorsDbModel : Post
     {
         public Author[] Authors { get; set; }
     }
