@@ -6,10 +6,9 @@ using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
 using Blog.Core.Repositories;
 using Blog.Core.Resources;
-using Blog.Data.DbModels;
 using MongoDB.Driver;
 
-namespace Blog.Data.Repositories
+namespace Blog.Data.Repositories.Posts
 {
     public class PostsRepository : IPostsRepository
     {
@@ -48,19 +47,7 @@ namespace Blog.Data.Repositories
         public async Task<PostCompleteResource> GetPost(Guid postId)
         {
             var postWithAuthorDbModel = await _postsCollection
-                .Aggregate()
-                .Lookup<Post, Author, PostCompleteDbModel>(
-                    _authorsCollection,
-                    post => post.AuthorId,
-                    author => author.Id,
-                    model => model.Authors
-                )
-                .Lookup<PostCompleteDbModel, Comment, PostCompleteDbModel>(
-                    _commentsCollection,
-                    post => post.Id,
-                    comment => comment.PostId,
-                    model => model.Comments)
-                .Match(p => p.Id == postId)
+                .IncludeAll(_authorsCollection, _commentsCollection)
                 .FirstOrDefaultAsync();
 
             if (postWithAuthorDbModel == null)
@@ -72,13 +59,7 @@ namespace Blog.Data.Repositories
         public async Task<List<PostCompleteResource>> GetAll()
         {
             var posts = await _postsCollection
-                .Aggregate()
-                .Lookup<Post, Author, PostCompleteDbModel>(
-                    _authorsCollection,
-                    post => post.AuthorId,
-                    author => author.Id,
-                    model => model.Authors
-                )
+                .IncludeAll(_authorsCollection, _commentsCollection)
                 .ToListAsync();
 
             return _mapper.Map<List<PostCompleteResource>>(posts);
