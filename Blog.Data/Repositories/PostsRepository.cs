@@ -45,6 +45,7 @@ namespace Blog.Data.Repositories
         public async Task<PostWithAuthorResource> GetPostWithAuthor(Guid postId)
         {
             var postWithAuthorDbModel = await _postsCollection
+
                 .Aggregate()
                 .Lookup<Post, Author, PostWithAuthorsDbModel>(
                     _authorsCollection,
@@ -52,7 +53,8 @@ namespace Blog.Data.Repositories
                     author => author.Id,
                     model => model.Authors
                 )
-                .FirstAsync();
+                .Match(p => p.Id == postId)
+                .FirstOrDefaultAsync();
 
             if (postWithAuthorDbModel == null)
                 return null;

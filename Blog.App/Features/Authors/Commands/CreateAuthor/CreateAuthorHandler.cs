@@ -13,9 +13,7 @@ namespace Blog.App.Features.Authors.Commands.CreateAuthor
         private readonly IAuthorsRepository _authorsRepository;
 
         public CreateAuthorHandler(IAuthorsRepository authorsRepository)
-        {
-            _authorsRepository = authorsRepository;
-        }
+            => _authorsRepository = authorsRepository;
 
         public async Task<IdResource> Handle(CreateAuthorCommand command, CancellationToken ct)
         {
