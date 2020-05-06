@@ -22,6 +22,7 @@ namespace Blog.App.Features.Posts.Commands.UpdatePost
 
             post.Title = command.Title;
             post.Content = command.Content;
+            post.AuthorId = command.AuthorId;
             post.UpdatedAt = DateTimeOffset.Now;
 
             await _postsRepository.Update(post);
