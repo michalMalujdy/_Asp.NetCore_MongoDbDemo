@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blog.Api.Resources.Posts;
 using Blog.App.Features.Posts.Commands.CreatePost;
+using Blog.App.Features.Posts.Commands.UpdatePost;
 using Blog.App.Features.Posts.Queries.GetPost;
 using Blog.App.Resources;
-using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.Posts;
 using Blog.Core.Repositories.Posts.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +15,9 @@ namespace Blog.Api.Controllers
     public class PostsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IPostsRepository _postsRepository;
 
-        public PostsController(IMediator mediator, IPostsRepository postsRepository)
-        {
-            _mediator = mediator;
-            _postsRepository = postsRepository;
-        }
+        public PostsController(IMediator mediator)
+            => _mediator = mediator;
 
         [HttpPost]
         public Task<IdResource> CreatePost(
@@ -40,23 +34,10 @@ namespace Blog.Api.Controllers
             => _postsRepository.GetAll();
 
         [HttpPut("{postId}")]
-        public async Task<IActionResult> UpdatePost(
+        public Task UpdatePost(
             [FromRoute] Guid postId,
             [FromBody] UpdatePostCommand command)
-        {
-            var post = await _postsRepository.Get(postId);
-
-            if (post == null)
-                return new NotFoundResult();
-
-            post.Title = command.Title;
-            post.Content = command.Content;
-            post.UpdatedAt = DateTimeOffset.Now;
-
-            await _postsRepository.Update(post);
-
-            return Ok();
-        }
+            => _mediator.Send(command);
 
         [HttpDelete("{postId}")]
         public Task Delete([FromRoute] Guid postId)
