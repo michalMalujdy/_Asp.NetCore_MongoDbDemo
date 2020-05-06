@@ -12,17 +12,14 @@ namespace Blog.App.Features.Authors.Commands.CreateAuthor
     public class CreateAuthorHandler : IRequestHandler<CreateAuthorCommand, IdResource>
     {
         private readonly IAuthorsRepository _authorsRepository;
-        private readonly IMapper _mapper;
 
-        public CreateAuthorHandler(IAuthorsRepository authorsRepository, IMapper mapper)
-        {
-            _authorsRepository = authorsRepository;
-            _mapper = mapper;
-        }
+        public CreateAuthorHandler(IAuthorsRepository authorsRepository)
+            => _authorsRepository = authorsRepository;
 
         public async Task<IdResource> Handle(CreateAuthorCommand command, CancellationToken ct)
         {
-            var author = _mapper.Map<Author>(command);
+            var author = new Author();
+            author.SetNames(command.FirstName, command.LastName);
             author.SetInitialTimestamps();
 
             var id = await _authorsRepository.Create(author, ct);

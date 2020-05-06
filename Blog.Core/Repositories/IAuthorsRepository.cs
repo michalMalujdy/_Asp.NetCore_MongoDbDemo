@@ -10,7 +10,7 @@ namespace Blog.Core.Repositories
     {
         Task<Guid> Create(Author author, CancellationToken ct);
 
-        Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize, CancellationToken ct);
+        Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize, string? filter, CancellationToken ct);
 
         Task<Author> Get(Guid authorId, CancellationToken ct);
     }

@@ -28,21 +28,38 @@ namespace Blog.Data.Repositories
             return author.Id;
         }
 
-        public async Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize, CancellationToken ct)
+        public async Task<PagableListResult<Author>> GetMany(
+            int pageNr,
+            int pageSize,
+            string? filter,
+            CancellationToken ct)
         {
             var list = new PagableListResult<Author>();
 
-            list.Results = await _authorsCollection
-                .Find(_ => true)
+            var baseQuery = GetBaseQuery(filter);
+
+            list.Results = await baseQuery
                 .Skip(pageSize * pageNr)
                 .Limit(pageSize)
                 .ToListAsync(ct);
 
-            list.TotalCount = await _authorsCollection
-                .Find(_ => true)
+            list.TotalCount = await baseQuery
                 .CountDocumentsAsync(ct);
 
             return list;
+        }
+
+        private IFindFluent<Author, Author> GetBaseQuery(string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+                return _authorsCollection.Find(_ => true);
+
+            filter = filter
+                .Trim()
+                .ToUpperInvariant();
+
+            return _authorsCollection
+                .Find(author => author.FullNameUpperCased.Contains(filter));
         }
 
         public async Task<Author> Get(Guid authorId, CancellationToken ct)

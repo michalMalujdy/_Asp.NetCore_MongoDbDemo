@@ -99,11 +99,12 @@ namespace Blog.Data.Repositories.Posts
             if (string.IsNullOrWhiteSpace(filter))
                 return baseQuery;
 
-            filter = filter.ToUpperInvariant();
+            filter = filter
+                .ToUpperInvariant()
+                .Trim();
 
             return baseQuery.Match(post => post.Title
                 .ToUpperInvariant()
-                .Trim()
                 .Contains(filter));
         }
     }
