@@ -1,6 +1,5 @@
 using Blog.Api.Configurations;
-using Blog.Core.Repositories.Authors;
-using Blog.Core.Repositories.Posts;
+using Blog.Core.Repositories;
 using Blog.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +23,7 @@ namespace Blog.Api.ConfigurationExtensions
         {
             services.AddTransient<IPostsRepository, PostsRepository>();
             services.AddTransient<IAuthorsRepository, AuthorsRepository>();
+            services.AddTransient<ICommentsRepository, CommentsRepository>();
         }
     }
 }

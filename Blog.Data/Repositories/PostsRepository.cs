@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.Posts;
+using Blog.Core.Repositories;
 using Blog.Core.Resources;
 using Blog.Data.DbModels;
 using MongoDB.Driver;

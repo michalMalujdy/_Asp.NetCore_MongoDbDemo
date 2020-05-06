@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.Authors;
+using Blog.Core.Repositories;
 using MediatR;
 
 namespace Blog.App.Features.Authors.GetAuthor

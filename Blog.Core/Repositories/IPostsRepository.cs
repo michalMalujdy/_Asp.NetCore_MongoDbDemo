@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
 using Blog.Core.Resources;
 
-namespace Blog.Core.Repositories.Posts
+namespace Blog.Core.Repositories
 {
     public interface IPostsRepository
     {

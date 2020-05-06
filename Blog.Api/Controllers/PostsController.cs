@@ -5,7 +5,7 @@ using Blog.App.Features.Posts.Commands.CreatePost;
 using Blog.App.Features.Posts.Commands.UpdatePost;
 using Blog.App.Features.Posts.Queries.GetPost;
 using Blog.App.Resources;
-using Blog.Core.Repositories.Posts;
+using Blog.Core.Repositories;
 using Blog.Core.Resources;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

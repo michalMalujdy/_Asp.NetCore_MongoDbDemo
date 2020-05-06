@@ -9,5 +9,13 @@ namespace Blog.Core.Domain.Models
         public DateTimeOffset CreatedAt { get; set; }
 
         public DateTimeOffset UpdatedAt { get; set; }
+
+        public void SetInitialTimestamps()
+        {
+            var now = DateTimeOffset.Now;
+            
+            CreatedAt = now;
+            UpdatedAt = now;
+        }
     }
 }

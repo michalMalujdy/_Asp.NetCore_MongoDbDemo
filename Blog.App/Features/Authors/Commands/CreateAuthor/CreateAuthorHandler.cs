@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blog.App.Resources;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.Authors;
+using Blog.Core.Repositories;
 using MediatR;
 
 namespace Blog.App.Features.Authors.Commands.CreateAuthor
@@ -17,16 +17,13 @@ namespace Blog.App.Features.Authors.Commands.CreateAuthor
 
         public async Task<IdResource> Handle(CreateAuthorCommand command, CancellationToken ct)
         {
-            var now = DateTimeOffset.Now;
-
             var author = new Author
             {
-                Id = Guid.NewGuid(),
                 FirstName = command.FirstName,
-                LastName = command.LastName,
-                CreatedAt = now,
-                UpdatedAt = now
+                LastName = command.LastName
             };
+
+            author.SetInitialTimestamps();
 
             var id = await _authorsRepository.Create(author, ct);
 

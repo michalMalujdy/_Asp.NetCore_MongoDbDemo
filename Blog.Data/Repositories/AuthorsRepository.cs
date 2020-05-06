@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories.Authors;
+using Blog.Core.Repositories;
 using Blog.Core.Resources;
 using MongoDB.Driver;
 

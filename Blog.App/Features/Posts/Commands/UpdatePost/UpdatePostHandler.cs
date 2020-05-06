@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Blog.Core.Repositories.Posts;
+using Blog.Core.Repositories;
 using MediatR;
 
 namespace Blog.App.Features.Posts.Commands.UpdatePost
