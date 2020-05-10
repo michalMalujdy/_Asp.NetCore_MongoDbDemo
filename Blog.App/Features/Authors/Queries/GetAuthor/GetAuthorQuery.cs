@@ -1,10 +1,9 @@
 using System;
-using Blog.Core.Domain.Models;
 using MediatR;
 
 namespace Blog.App.Features.Authors.Queries.GetAuthor
 {
-    public class GetAuthorQuery : IRequest<Author>
+    public class GetAuthorQuery : IRequest<GetAuthorResult>
     {
         public Guid AuthorId { get; set; }
     }

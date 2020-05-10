@@ -19,12 +19,12 @@ namespace Blog.Api.Controllers
             => Mediator.Send(command);
 
         [HttpGet]
-        public Task<PagableListResult<Author>> GetAuthors(
+        public Task<PagableListResult<GetAuthorsResult>> GetAuthors(
             [FromQuery] GetAuthorsQuery query)
             => Mediator.Send(query);
 
         [HttpGet("{authorId}")]
-        public Task<Author> GetAuthor(
+        public Task<GetAuthorResult> GetAuthor(
             [FromRoute] GetAuthorQuery query)
             => Mediator.Send(query);
     }

@@ -1,19 +1,27 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Blog.Core.Domain.Models;
+using AutoMapper;
 using Blog.Core.Repositories;
 using MediatR;
 
 namespace Blog.App.Features.Authors.Queries.GetAuthor
 {
-    public class GetAuthorHandler : IRequestHandler<GetAuthorQuery, Author>
+    public class GetAuthorHandler : IRequestHandler<GetAuthorQuery, GetAuthorResult>
     {
         private readonly IAuthorsRepository _authorsRepository;
+        private readonly IMapper _mapper;
 
-        public GetAuthorHandler(IAuthorsRepository authorsRepository)
-            => _authorsRepository = authorsRepository;
+        public GetAuthorHandler(IAuthorsRepository authorsRepository, IMapper mapper)
+        {
+            _authorsRepository = authorsRepository;
+            _mapper = mapper;
+        }
 
-        public Task<Author> Handle(GetAuthorQuery query, CancellationToken ct)
-            => _authorsRepository.Get(query.AuthorId, ct);
+        public async Task<GetAuthorResult> Handle(GetAuthorQuery query, CancellationToken ct)
+        {
+            var author = await _authorsRepository.Get(query.AuthorId, ct);
+
+            return _mapper.Map<GetAuthorResult>(author);
+        }
     }
 }
