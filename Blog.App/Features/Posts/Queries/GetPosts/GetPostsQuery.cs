@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Blog.App.Features.Posts.Queries.GetPosts
 {
-    public class GetPostsQuery : IRequest<PagableListResult<PostCompleteResource>>, IPageable, IFilterable
+    public class GetPostsQuery : IRequest<PagableListResult<GetPostsResult>>, IPageable, IFilterable
     {
         public int PageNr { get; set; }
 
