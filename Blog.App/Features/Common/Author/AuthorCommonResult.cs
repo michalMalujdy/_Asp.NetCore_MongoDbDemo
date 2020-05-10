@@ -1,8 +1,8 @@
 using System;
 
-namespace Blog.App.Features.Authors.Queries.GetAuthor
+namespace Blog.App.Features.Common.Author
 {
-    public class GetAuthorResult
+    public class AuthorCommonResult
     {
         public Guid Id { get; set; }
 

@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Blog.App.Features.Common.Author;
 using Blog.Core.Repositories;
 using Blog.Core.Resources;
 using MediatR;
 
 namespace Blog.App.Features.Authors.Queries.GetAuthors
 {
-    public class GetAuthorsHandler : IRequestHandler<GetAuthorsQuery, PagableListResult<GetAuthorsResult>>
+    public class GetAuthorsHandler : IRequestHandler<GetAuthorsQuery, PagableListResult<AuthorCommonResult>>
     {
         private readonly IAuthorsRepository _authorsRepository;
         private readonly IMapper _mapper;
@@ -19,7 +20,7 @@ namespace Blog.App.Features.Authors.Queries.GetAuthors
             _mapper = mapper;
         }
 
-        public async Task<PagableListResult<GetAuthorsResult>> Handle(GetAuthorsQuery query, CancellationToken ct)
+        public async Task<PagableListResult<AuthorCommonResult>> Handle(GetAuthorsQuery query, CancellationToken ct)
         {
             var authors = await _authorsRepository.GetMany(
                 query.PageNr,
@@ -27,9 +28,9 @@ namespace Blog.App.Features.Authors.Queries.GetAuthors
                 query.Filter,
                 ct);
 
-            return new PagableListResult<GetAuthorsResult>
+            return new PagableListResult<AuthorCommonResult>
             {
-                Results = _mapper.Map<List<GetAuthorsResult>>(authors.Results),
+                Results = _mapper.Map<List<AuthorCommonResult>>(authors.Results),
                 TotalCount = authors.TotalCount
             };
         }

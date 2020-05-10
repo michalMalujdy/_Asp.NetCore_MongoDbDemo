@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Blog.App.Features.Authors.Commands.CreateAuthor;
 using Blog.App.Features.Authors.Queries.GetAuthor;
 using Blog.App.Features.Authors.Queries.GetAuthors;
+using Blog.App.Features.Common.Author;
 using Blog.App.Resources;
 using Blog.Core.Domain.Models;
 using Blog.Core.Resources;
@@ -19,12 +20,12 @@ namespace Blog.Api.Controllers
             => Mediator.Send(command);
 
         [HttpGet]
-        public Task<PagableListResult<GetAuthorsResult>> GetAuthors(
+        public Task<PagableListResult<AuthorCommonResult>> GetAuthors(
             [FromQuery] GetAuthorsQuery query)
             => Mediator.Send(query);
 
         [HttpGet("{authorId}")]
-        public Task<GetAuthorResult> GetAuthor(
+        public Task<AuthorCommonResult> GetAuthor(
             [FromRoute] GetAuthorQuery query)
             => Mediator.Send(query);
     }
