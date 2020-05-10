@@ -29,7 +29,7 @@ namespace Blog.App.Features.Posts.Queries.GetPosts
 
             return new PagableListResult<GetPostsResult>
             {
-                Results = _mapper.Map<List<GetPostsResult>>(posts),
+                Results = _mapper.Map<List<GetPostsResult>>(posts.Results),
                 TotalCount = posts.TotalCount
             };
         }

@@ -1,5 +1,5 @@
 using AutoMapper;
-using Blog.Core.Domain.Models;
+using Blog.Core.Resources;
 
 namespace Blog.App.Features.Posts.Queries.GetPosts
 {
@@ -7,7 +7,7 @@ namespace Blog.App.Features.Posts.Queries.GetPosts
     {
         public GetPostsMaps()
         {
-            CreateMap<Post, GetPostsResult>();
+            CreateMap<PostCompleteResource, GetPostsResult>();
         }
     }
 }
