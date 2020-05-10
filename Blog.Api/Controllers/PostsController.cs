@@ -21,7 +21,7 @@ namespace Blog.Api.Controllers
             => Mediator.Send(command);
 
         [HttpGet("{postId}")]
-        public Task<PostCompleteResource> GetPost(
+        public Task<GetPostResult> GetPost(
             [FromRoute] GetPostQuery query)
             => Mediator.Send(query);
 
