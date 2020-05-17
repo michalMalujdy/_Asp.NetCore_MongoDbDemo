@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Blog.Api.Configurations;
 using Blog.Core.Domain.Models;
 using MongoDB.Driver;
@@ -20,6 +21,15 @@ namespace Blog.Data.Repositories.MongoRepository
             PostsCollection = db.GetCollection<Post>("Posts");
             AuthorsCollection = db.GetCollection<Author>("Authors");
             CommentsCollection = db.GetCollection<Comment>("Comments");
+        }
+
+        public async Task Configure()
+        {
+            await AuthorsCollection.Indexes
+                .CreateOneAsync(Builders<Author>.IndexKeys.Ascending(a => a.FullNameUpperCased));
+
+            await PostsCollection.Indexes
+                .CreateOneAsync(Builders<Post>.IndexKeys.Ascending(p => p.TitleUpperCased));
         }
     }
 }

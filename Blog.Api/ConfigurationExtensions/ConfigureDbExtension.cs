@@ -18,6 +18,11 @@ namespace Blog.Api.ConfigurationExtensions
 
             ConfigureRepositories(services);
 
+            var serviceProvider = services.BuildServiceProvider();
+            using var scope = serviceProvider.CreateScope();
+            var mongoRepository = scope.ServiceProvider.GetRequiredService<IMongoRepository>();
+            mongoRepository.Configure();
+
             return services;
         }
 
