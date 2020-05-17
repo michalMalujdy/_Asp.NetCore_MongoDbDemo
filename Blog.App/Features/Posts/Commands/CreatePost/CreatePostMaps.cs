@@ -7,7 +7,11 @@ namespace Blog.App.Features.Posts.Commands.CreatePost
     {
         public CreatePostMaps()
         {
-            CreateMap<CreatePostCommand, Post>();
+            CreateMap<CreatePostCommand, Post>()
+                .AfterMap((src, dest) =>
+                {
+                    dest.SetTitle(src.Title);
+                });
         }
     }
 }

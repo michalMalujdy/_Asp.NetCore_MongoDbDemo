@@ -8,7 +8,11 @@ namespace Blog.App.Features.Posts.Commands.UpdatePost
         public UpdatePostMaps()
         {
             CreateMap<UpdatePostCommand, Post>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .AfterMap((src, dest) =>
+                {
+                    dest.SetTitle(src.Title);
+                });
         }
     }
 }

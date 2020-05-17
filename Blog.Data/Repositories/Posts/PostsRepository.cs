@@ -46,6 +46,7 @@ namespace Blog.Data.Repositories.Posts
             var postWithAuthorDbModel = await _mongoRepository
                 .PostsCollection
                 .IncludeAll(_mongoRepository.AuthorsCollection, _mongoRepository.CommentsCollection)
+                .Match(p => p.Id == postId)
                 .FirstOrDefaultAsync(ct);
 
             if (postWithAuthorDbModel == null)
