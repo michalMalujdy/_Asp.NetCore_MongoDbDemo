@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Blog.Core.Repositories;
+using Blog.Core.Data.Repositories;
 using Blog.Core.Resources;
 using MediatR;
 

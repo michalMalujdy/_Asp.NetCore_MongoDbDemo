@@ -1,6 +1,7 @@
 using Blog.Api.Configurations;
-using Blog.Core.Repositories;
+using Blog.Core.Data.Repositories;
 using Blog.Data.Repositories;
+using Blog.Data.Repositories.MongoRepository;
 using Blog.Data.Repositories.Posts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ namespace Blog.Api.ConfigurationExtensions
 
         private static void ConfigureRepositories(IServiceCollection services)
         {
+            services.AddScoped<IMongoRepository, MongoRepository>();
             services.AddTransient<IPostsRepository, PostsRepository>();
             services.AddTransient<IAuthorsRepository, AuthorsRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();

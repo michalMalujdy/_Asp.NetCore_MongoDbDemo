@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Blog.App.Resources;
+using Blog.Core.Data.Repositories;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories;
 using MediatR;
 
 namespace Blog.App.Features.Posts.Commands.CreatePost

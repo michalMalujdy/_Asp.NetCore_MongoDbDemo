@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
 
-namespace Blog.Core.Repositories
+namespace Blog.Core.Data.Repositories
 {
     public interface ICommentsRepository
     {

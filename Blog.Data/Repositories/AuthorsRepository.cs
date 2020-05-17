@@ -2,28 +2,26 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Blog.Api.Configurations;
+using Blog.Core.Data.Repositories;
 using Blog.Core.Domain.Models;
-using Blog.Core.Repositories;
 using Blog.Core.Resources;
+using Blog.Data.Repositories.MongoRepository;
 using MongoDB.Driver;
 
 namespace Blog.Data.Repositories
 {
     public class AuthorsRepository : IAuthorsRepository
     {
-        private readonly IMongoCollection<Author> _authorsCollection;
+        private readonly IMongoRepository _mongoRepository;
 
-        public AuthorsRepository(MongoDbSettings dbSettings)
-        {
-            var db = new MongoClient(dbSettings.ConnectionString)
-                .GetDatabase(dbSettings.DbName);
-
-            _authorsCollection = db.GetCollection<Author>("Authors");
-        }
+        public AuthorsRepository(IMongoRepository mongoRepository)
+            => _mongoRepository = mongoRepository;
 
         public async Task<Guid> Create(Author author, CancellationToken ct)
         {
-            await _authorsCollection.InsertOneAsync(author, ct);
+            await _mongoRepository
+                .AuthorsCollection
+                .InsertOneAsync(author, ct);
 
             return author.Id;
         }
@@ -52,19 +50,23 @@ namespace Blog.Data.Repositories
         private IFindFluent<Author, Author> GetBaseQuery(string filter)
         {
             if (string.IsNullOrWhiteSpace(filter))
-                return _authorsCollection.Find(_ => true);
+                return _mongoRepository
+                    .AuthorsCollection
+                    .Find(_ => true);
 
             filter = filter
                 .Trim()
                 .ToUpperInvariant();
 
-            return _authorsCollection
+            return _mongoRepository
+                .AuthorsCollection
                 .Find(author => author.FullNameUpperCased.Contains(filter));
         }
 
         public async Task<Author> Get(Guid authorId, CancellationToken ct)
         {
-            var cursor = await _authorsCollection
+            var cursor = await _mongoRepository
+                .AuthorsCollection
                 .FindAsync(author => author.Id == authorId, cancellationToken: ct);
 
             return await cursor.FirstOrDefaultAsync(ct);

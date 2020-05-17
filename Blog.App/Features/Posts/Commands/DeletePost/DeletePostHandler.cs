@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Blog.Core.Repositories;
+using Blog.Core.Data.Repositories;
 using MediatR;
 
 namespace Blog.App.Features.Posts.Commands.DeletePost

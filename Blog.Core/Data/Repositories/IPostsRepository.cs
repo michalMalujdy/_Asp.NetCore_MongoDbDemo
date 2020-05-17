@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Blog.Core.Domain.Models;
 using Blog.Core.Resources;
 
-namespace Blog.Core.Repositories
+namespace Blog.Core.Data.Repositories
 {
     public interface IPostsRepository
     {
