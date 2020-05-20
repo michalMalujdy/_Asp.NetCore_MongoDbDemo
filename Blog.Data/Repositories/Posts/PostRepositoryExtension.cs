@@ -9,9 +9,10 @@ namespace Blog.Data.Repositories.Posts
         public static IAggregateFluent<PostCompleteDbModel> IncludeAll(
             this IMongoCollection<Post> postsCollection,
             IMongoCollection<Author> authorsCollection,
-            IMongoCollection<Comment> commentsCollection)
+            IMongoCollection<Comment> commentsCollection,
+            IClientSessionHandle session)
             => postsCollection
-                .Aggregate()
+                .Aggregate(session)
                 .IncludeAuthors(authorsCollection)
                 .IncludeComments(commentsCollection);
 
