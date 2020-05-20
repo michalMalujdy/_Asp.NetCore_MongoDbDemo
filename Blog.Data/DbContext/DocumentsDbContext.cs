@@ -16,8 +16,9 @@ namespace Blog.Data.DbContext
         public IMongoCollection<Post> Posts { get; }
         public IMongoCollection<Comment> Comments { get; }
 
-        public DocumentsDbContext(IMongoClient client, MongoDbSettings dbSettings)
+        public DocumentsDbContext(MongoDbSettings dbSettings)
         {
+            var client = new MongoClient(dbSettings.ConnectionString);
             Session = client.StartSession(new ClientSessionOptions { CausalConsistency = true });
             Database = Session.Client.GetDatabase(dbSettings.DbName);
 

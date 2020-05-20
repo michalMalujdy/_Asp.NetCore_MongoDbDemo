@@ -13,5 +13,7 @@ namespace Blog.Core.Data.Repositories
         Task<PagableListResult<Author>> GetMany(int pageNr, int pageSize, string? filter, CancellationToken ct);
 
         Task<Author> Get(Guid authorId, CancellationToken ct);
+
+        Task Delete(Guid authorId, CancellationToken ct);
     }
 }

@@ -80,5 +80,11 @@ namespace Blog.Data.Repositories
 
             return await cursor.FirstOrDefaultAsync(ct);
         }
+
+        public Task Delete(Guid authorId, CancellationToken ct)
+            => _dbContext.Authors.DeleteOneAsync(
+                _dbContext.Session,
+                a => a.Id == authorId,
+                cancellationToken: ct);
     }
 }

@@ -1,7 +1,5 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Blog.App.Resources;
 using Blog.Core.Data.Repositories;
 using Blog.Core.Domain.Models;
