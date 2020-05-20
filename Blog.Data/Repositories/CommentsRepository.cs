@@ -1,26 +1,27 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Blog.Api.Configurations;
 using Blog.Core.Data.Repositories;
 using Blog.Core.Domain.Models;
-using Blog.Data.Repositories.MongoRepository;
-using MongoDB.Driver;
+using Blog.Data.DbContext;
 
 namespace Blog.Data.Repositories
 {
     public class CommentsRepository : ICommentsRepository
     {
-        private readonly IMongoRepository _mongoRepository;
+        private readonly IDocumentsDbContext _dbContext;
 
-        public CommentsRepository(IMongoRepository mongoRepository)
-            => _mongoRepository = mongoRepository;
+        public CommentsRepository(IDocumentsDbContext mongoRepository)
+            => _dbContext = mongoRepository;
 
         public async Task<Guid> Create(Comment comment, CancellationToken ct)
         {
-            await _mongoRepository
-                .CommentsCollection
-                .InsertOneAsync(comment, ct);
+            await _dbContext
+                .Comments
+                .InsertOneAsync(
+                    _dbContext.Session,
+                    comment,
+                    cancellationToken: ct);
 
             return comment.Id;
         }
