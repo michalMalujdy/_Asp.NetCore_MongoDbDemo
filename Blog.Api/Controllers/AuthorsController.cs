@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using Blog.App.Features.Authors.Commands.CreateAuthor;
 using Blog.App.Features.Authors.Commands.DeleteAuthor;
+using Blog.App.Features.Authors.Commands.UpdateAuthor;
 using Blog.App.Features.Authors.Queries.GetAuthor;
 using Blog.App.Features.Authors.Queries.GetAuthors;
 using Blog.App.Features.Common.Author;
@@ -29,6 +31,16 @@ namespace Blog.Api.Controllers
         public Task<AuthorCommonResult> GetAuthor(
             [FromRoute] GetAuthorQuery query)
             => Mediator.Send(query);
+
+        [HttpPut("{authorId}")]
+        public async Task UpdateAuthor(
+            [FromRoute] Guid authorId,
+            [FromBody] UpdateAuthorCommand command)
+        {
+            command.AuthorId = authorId;
+
+            await Mediator.Send(command);
+        }
 
         [HttpDelete("{authorId}")]
         public Task DeleteAuthor(

@@ -15,5 +15,7 @@ namespace Blog.Core.Data.Repositories
         Task<Author> Get(Guid authorId, CancellationToken ct);
 
         Task Delete(Guid authorId, CancellationToken ct);
+
+        Task Update(Author author, CancellationToken ct);
     }
 }

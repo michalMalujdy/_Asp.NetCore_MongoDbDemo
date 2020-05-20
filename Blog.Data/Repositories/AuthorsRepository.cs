@@ -86,5 +86,12 @@ namespace Blog.Data.Repositories
                 _dbContext.Session,
                 a => a.Id == authorId,
                 cancellationToken: ct);
+
+        public Task Update(Author author, CancellationToken ct)
+            => _dbContext.Authors.ReplaceOneAsync(
+                _dbContext.Session,
+                a => a.Id == author.Id,
+                author,
+                cancellationToken: ct);
     }
 }
