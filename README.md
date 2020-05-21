@@ -30,4 +30,4 @@ The Data layer (in this case MongoDB) of the project was separated from others l
 ## Features (Endpoints)
 Swagger auto-generated documentation
 
-<img src="https://i.ibb.co/f96XzGT/blog-api-doc.png"></img>
+<img src="https://i.ibb.co/f96XzGT/blog-api-doc.png" style="max-width: 500px"></img>
