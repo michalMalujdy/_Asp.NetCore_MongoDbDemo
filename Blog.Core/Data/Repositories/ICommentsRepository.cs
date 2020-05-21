@@ -9,6 +9,10 @@ namespace Blog.Core.Data.Repositories
     {
         Task<Guid> Create(Comment comment, CancellationToken ct);
 
+        Task<Comment> Get(Guid commentId, CancellationToken ct);
+
+        Task Update(Comment comment, CancellationToken ct);
+
         Task Delete(Guid commentId, CancellationToken ct);
     }
 }
