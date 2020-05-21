@@ -8,5 +8,7 @@ namespace Blog.Core.Data.Repositories
     public interface ICommentsRepository
     {
         Task<Guid> Create(Comment comment, CancellationToken ct);
+
+        Task Delete(Guid commentId, CancellationToken ct);
     }
 }

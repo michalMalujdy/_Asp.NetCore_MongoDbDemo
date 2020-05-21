@@ -7,9 +7,7 @@ using Blog.App.Features.Authors.Queries.GetAuthor;
 using Blog.App.Features.Authors.Queries.GetAuthors;
 using Blog.App.Features.Common.Author;
 using Blog.App.Resources;
-using Blog.Core.Domain.Models;
 using Blog.Core.Resources;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Api.Controllers
