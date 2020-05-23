@@ -22,12 +22,15 @@ The Data layer (in this case MongoDB) of the project was separated from others l
 - Implement strongly typed queries
 - Add indexes to the MongoDB for faster search - `Author`'s `FullNameUpperCased` and `Post`'s `TitleUpperCased`. Indexes was upper-cased in order to make search case-insensitive.
 - Establish per-request session with MongoDB
+- Setup external cluster in Mongo Atlas
 
 ## Technology stack
-- ASP.NET Core 3.1
-- MongoDB
+- API - ASP.NET Core 3.1
+- NoSQL database- MongoDB
 
-## Features (Endpoints)
-Swagger auto-generated documentation
+## Endpoints documentation with interactive demo
+Swagger auto-generated documentation with fully interactive list of endpoints is available <a href="https://blog-m-malujdy.azurewebsites.net/swagger/index.html">here</a>.
+
+In case the web service is down, here is the screen shoot:
 
 <img src="https://i.ibb.co/f96XzGT/blog-api-doc.png" width="500px" alt="Swagger documentation"></img>
